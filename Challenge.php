@@ -85,24 +85,61 @@ class Challenge
     {
 
         $checked = [];
-        for($i=1;$i<=$n;$i++) {
-           
-        if ($i % 3 == 0 && $i % 5 == 0) {
-            $checked[] = "FizzBuzz";
+        for ($i = 1; $i <= $n; $i++) {
 
-        } elseif ($i % 3 == 0) {
-            $checked[] = "Fizz";
-
-        } elseif ($i % 5 == 0) {
-            $checked[] = "Buzz";
-
-        } else {
-            $checked[] = $i;
-        }
+            if ($i % 3 == 0 && $i % 5 == 0) {
+                $checked[] = "FizzBuzz";
+            } elseif ($i % 3 == 0) {
+                $checked[] = "Fizz";
+            } elseif ($i % 5 == 0) {
+                $checked[] = "Buzz";
+            } else {
+                $checked[] = $i;
+            }
         }
         return $checked;
     }
+
+
+    //longest common prefix
+    public function longestCommonPrefix(array $strs): string
+    {
+        $prefix = $strs[0];
+
+        foreach ($strs as $str) {
+
+            while (!str_starts_with($str, $prefix)) {
+
+                $prefix = substr($prefix, 0, -1);
+
+                if ($prefix === "") {
+                    return "";
+                }
+            }
+        }
+
+        return $prefix;
+    }
+
+    //sum of two idices to match the
+
+    public function sumOfTwo(array $numbers, int $target){
+        $count = count($numbers);
+
+        for($i=0;$i<$count;$i++){
+            for($j=$i;$j<$i+1;$j++){
+                if($numbers[$i]+$numbers[$j]== $target){
+                    return [$i,$j];
+                }
+            }
+        }
+
+        return [];
+    }
 }
+
+
+
 
 $challenge = new Challenge();
 // echo $challenge->largestInteger([2,8,4,80,10,30,51]);
