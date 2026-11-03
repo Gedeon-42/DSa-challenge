@@ -136,6 +136,22 @@ class Challenge
 
         return [];
     }
+
+    public function findMedian(array $nums1, array $nums2): float
+{
+    $merged = array_merge($nums1, $nums2);
+
+    sort($merged);
+
+    $count = count($merged);
+    $middle = intdiv($count, 2);
+
+    if ($count % 2 !== 0) {
+        return (float) $merged[$middle];
+    }
+
+    return ($merged[$middle - 1] + $merged[$middle]) / 2;
+}
 }
 
 
