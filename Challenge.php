@@ -152,6 +152,56 @@ class Challenge
 
     return ($merged[$middle - 1] + $merged[$middle]) / 2;
 }
+
+public function findMedianSortedArrays(array $nums1, array $nums2): float
+{
+    // Always perform binary search on the smaller array
+    if (count($nums1) > count($nums2)) {
+        [$nums1, $nums2] = [$nums2, $nums1];
+    }
+
+    $m = count($nums1);
+    $n = count($nums2);
+
+    $low = 0;
+    $high = $m;
+
+    while ($low <= $high) {
+
+        $i = intdiv($low + $high, 2);
+        $j = intdiv($m + $n + 1, 2) - $i;
+
+        $left1 = ($i === 0) ? PHP_INT_MIN : $nums1[$i - 1];
+        $right1 = ($i === $m) ? PHP_INT_MAX : $nums1[$i];
+
+        $left2 = ($j === 0) ? PHP_INT_MIN : $nums2[$j - 1];
+        $right2 = ($j === $n) ? PHP_INT_MAX : $nums2[$j];
+
+        // Check whether we found the correct partition
+        if ($left1 <= $right2 && $left2 <= $right1) {
+
+            // Odd number of elements
+            if (($m + $n) % 2 !== 0) {
+                return (float) max($left1, $left2);
+            }
+
+            // Even number of elements
+            return (max($left1, $left2) + min($right1, $right2)) / 2;
+        }
+
+        // Move binary search to the left
+        elseif ($left1 > $right2) {
+            $high = $i - 1;
+        }
+
+        // Move binary search to the right
+        else {
+            $low = $i + 1;
+        }
+    }
+
+    throw new LogicException("No valid partition found.");
+}
 }
 
 
